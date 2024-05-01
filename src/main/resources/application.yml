@@ -2,9 +2,12 @@ spring:
   application:
     name: sp_parking_api
   datasource:
-    url: jdbc:mysql://ENC(5v1KhrBpU0i+fg5xtLOs03TqGUYj1I3C):3306/parking
-    username: ENC(MCaJPBy10FiYeeLVqkCeG44h1/S0e91T)
-    password: ENC(VzWUpEhUTG41LUwPxxu37jfqJq1Ozv6m)
+    url: jdbc:mysql://localhost:3306/parking
+    username: ENC(UZKxgIDuA26/DA2/J6Btf2eEa8RuaOaS)
+    password: ENC(G3qSSN0DpypzQtFhfSiuUWv4c/4C01rT)
+#    url: jdbc:mysql://localhost:3306/parking
+#    username: parking_api
+#    password: parking_api!
     hikari:
       maximum-pool-size: 10     # ???? connection ? ???? Pool ? ????? ?? Connection ??
       minimum-idle: 10          #  DBCP ?? ???? ?? ??(Idle) ???? ?, App ? ??? ? ?? ??? ? ?? ???? ?? ??? ??
@@ -15,7 +18,7 @@ spring:
   jpa:
     open-in-view: true
     hibernate:
-      ddl-auto: create
+      ddl-auto: validate
       naming:
         physical-strategy: org.hibernate.boot.model.naming.PhysicalNamingStrategyStandardImpl
     show-sql: true
