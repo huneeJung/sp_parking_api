@@ -10,7 +10,7 @@ import org.springframework.context.annotation.Configuration;
 @Configuration
 public class JasyptConfig {
 
-    @Value("${jasypt.encryptor.key:empty}")
+    @Value("${jasypt.encryptor.key}")
     String key;
 
     @Bean(name = "jasyptStringEncryptor")
