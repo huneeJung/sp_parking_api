@@ -8,6 +8,7 @@ import org.springframework.boot.autoconfigure.SpringBootApplication;
 import org.springframework.boot.context.event.ApplicationReadyEvent;
 import org.springframework.context.event.EventListener;
 import org.springframework.core.env.Environment;
+import org.springframework.data.jpa.repository.config.EnableJpaAuditing;
 import org.springframework.web.servlet.config.annotation.CorsRegistry;
 import org.springframework.web.servlet.config.annotation.WebMvcConfigurer;
 
@@ -18,6 +19,7 @@ import java.util.concurrent.ScheduledThreadPoolExecutor;
 import java.util.concurrent.TimeUnit;
 
 @Slf4j
+@EnableJpaAuditing
 @SpringBootApplication
 @RequiredArgsConstructor
 public class SpParkingApiApplication implements WebMvcConfigurer {
@@ -44,7 +46,7 @@ public class SpParkingApiApplication implements WebMvcConfigurer {
     }
 
     private void monitoring() {
-        try(ScheduledExecutorService thread = new ScheduledThreadPoolExecutor(1)) {
+        try (ScheduledExecutorService thread = new ScheduledThreadPoolExecutor(1)) {
             thread.scheduleWithFixedDelay(() -> {
                 System.gc();
                 Runtime runtime = Runtime.getRuntime();
@@ -61,7 +63,7 @@ public class SpParkingApiApplication implements WebMvcConfigurer {
         log.info("Thread Limit     ::: {}", env.getProperty("server.tomcat.threads.max"));
         log.info("Connection Limit ::: {}", env.getProperty("server.tomcat.max-connections"));
         log.info("Hikari Pool Size ::: {}", env.getProperty("spring.datasource.hikari.maximum-pool-size"));
-        monitoring();
+//        monitoring();
     }
 
 }

@@ -5,9 +5,9 @@ spring:
     url: jdbc:mysql://localhost:3306/parking
     username: ENC(UZKxgIDuA26/DA2/J6Btf2eEa8RuaOaS)
     password: ENC(G3qSSN0DpypzQtFhfSiuUWv4c/4C01rT)
-#    url: jdbc:mysql://localhost:3306/parking
-#    username: parking_api
-#    password: parking_api!
+    #    url: jdbc:mysql://localhost:3306/parking
+    #    username: parking_api
+    #    password: parking_api!
     hikari:
       maximum-pool-size: 10     # ???? connection ? ???? Pool ? ????? ?? Connection ??
       minimum-idle: 10          #  DBCP ?? ???? ?? ??(Idle) ???? ?, App ? ??? ? ?? ??? ? ?? ???? ?? ??? ??
@@ -50,3 +50,14 @@ logging:
     root: info
   pattern:
     console: "[%-5level] %d{yyyy-MM-dd HH:mm:ss.SSS} [%t] %c{1} - %msg%n"
+
+parking:
+  openapi:
+    realtime:
+      url: http://openapi.seoul.go.kr:8088
+      key: ENC(9nnh9Hl/CDacvhOcndqPMYgRXVoJ73zsGWdwEP89BWkBGw32L052NQ==)
+      type: json
+      service: GetParkingInfo
+  insert:
+    batch:
+      flag: 100
