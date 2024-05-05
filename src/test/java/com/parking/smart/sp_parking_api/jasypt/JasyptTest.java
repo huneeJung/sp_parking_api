@@ -17,7 +17,8 @@ public class JasyptTest {
     @Test
     void jasypt() {
         System.out.println("key : " + key);
-        String secret = "parking_api";
+//        String secret = "parking_api";
+        String secret = "71546e4250636a7335355344596566";
 
         String encodingKey = jasyptEncoding(secret);
         String decodingKey = jasyptDecoding(encodingKey);
