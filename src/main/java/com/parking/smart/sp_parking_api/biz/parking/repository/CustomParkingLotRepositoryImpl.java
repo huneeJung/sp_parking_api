@@ -14,7 +14,6 @@ import org.springframework.stereotype.Repository;
 import java.util.List;
 
 import static com.parking.smart.sp_parking_api.biz.parking.entity.QParkingLot.parkingLot;
-import static com.parking.smart.sp_parking_api.biz.parking.entity.QParkingLotDetail.parkingLotDetail;
 
 @Repository
 @RequiredArgsConstructor
@@ -31,18 +30,18 @@ public class CustomParkingLotRepositoryImpl implements CustomParkingLotRepositor
 
         switch (howDay) {
             case "weekend": {
-                conditionOpenField = parkingLotDetail.weekendOpen;
-                conditionCloseField = parkingLotDetail.weekendClose;
+                conditionOpenField = parkingLot.weekendOpen;
+                conditionCloseField = parkingLot.weekendClose;
                 break;
             }
             case "holiday": {
-                conditionOpenField = parkingLotDetail.holidayOpen;
-                conditionCloseField = parkingLotDetail.holidayClose;
+                conditionOpenField = parkingLot.holidayOpen;
+                conditionCloseField = parkingLot.holidayClose;
                 break;
             }
             default: {
-                conditionOpenField = parkingLotDetail.weekdayOpen;
-                conditionCloseField = parkingLotDetail.weekdayClose;
+                conditionOpenField = parkingLot.weekdayOpen;
+                conditionCloseField = parkingLot.weekdayClose;
             }
         }
 
@@ -58,8 +57,7 @@ public class CustomParkingLotRepositoryImpl implements CustomParkingLotRepositor
                                         ).then(true)
                                         .otherwise(false).as("isOperating")
                         )
-                ).from(parkingLot).join(parkingLotDetail)
-                .on(parkingLotDetail.id.eq(parkingLotDetail.id))
+                ).from(parkingLot)
                 .offset(pageable.getOffset())
                 .limit(pageable.getPageSize())
                 .fetch();
