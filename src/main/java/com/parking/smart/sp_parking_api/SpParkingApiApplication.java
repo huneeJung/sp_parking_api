@@ -14,9 +14,6 @@ import org.springframework.web.servlet.config.annotation.WebMvcConfigurer;
 
 import java.util.Locale;
 import java.util.TimeZone;
-import java.util.concurrent.ScheduledExecutorService;
-import java.util.concurrent.ScheduledThreadPoolExecutor;
-import java.util.concurrent.TimeUnit;
 
 @Slf4j
 @EnableJpaAuditing
@@ -45,16 +42,16 @@ public class SpParkingApiApplication implements WebMvcConfigurer {
         System.setProperty("aws.ec2.metadata.disabled", "true"); // AWS SDK가 EC2 인스턴스 메타데이터를 조회하지 않도록 설정
     }
 
-    private void monitoring() {
-        try (ScheduledExecutorService thread = new ScheduledThreadPoolExecutor(1)) {
-            thread.scheduleWithFixedDelay(() -> {
-                System.gc();
-                Runtime runtime = Runtime.getRuntime();
-                log.info("Max Memory   ::: {} MB ", runtime.maxMemory() / 1024 * 1024);
-                log.info("Using Memory ::: {} MB", (runtime.totalMemory() - runtime.freeMemory()) / (1024 * 1024));
-            }, 1, 1, TimeUnit.MINUTES);
-        }
-    }
+//    private void monitoring() {
+//        try (ScheduledExecutorService thread = new ScheduledThreadPoolExecutor(1)) {
+//            thread.scheduleWithFixedDelay(() -> {
+//                System.gc();
+//                Runtime runtime = Runtime.getRuntime();
+//                log.info("Max Memory   ::: {} MB ", runtime.maxMemory() / 1024 * 1024);
+//                log.info("Using Memory ::: {} MB", (runtime.totalMemory() - runtime.freeMemory()) / (1024 * 1024));
+//            }, 1, 1, TimeUnit.MINUTES);
+//        }
+//    }
 
     @EventListener(ApplicationReadyEvent.class)
     public void applicationReadyEvent() {

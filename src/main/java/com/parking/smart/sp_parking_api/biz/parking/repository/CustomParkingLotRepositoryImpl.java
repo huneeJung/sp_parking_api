@@ -1,7 +1,10 @@
 package com.parking.smart.sp_parking_api.biz.parking.repository;
 
-import com.parking.smart.sp_parking_api.biz.parking.model.ParkingLotResponse;
+import com.parking.smart.sp_parking_api.biz.common.service.CommonService;
+import com.parking.smart.sp_parking_api.biz.parking.model.response.ParkingLotResponse;
 import com.querydsl.core.types.Projections;
+import com.querydsl.core.types.dsl.BooleanExpression;
+import com.querydsl.core.types.dsl.BooleanPath;
 import com.querydsl.core.types.dsl.CaseBuilder;
 import com.querydsl.core.types.dsl.StringPath;
 import com.querydsl.jpa.impl.JPAQueryFactory;
@@ -14,7 +17,6 @@ import org.springframework.stereotype.Repository;
 import java.util.List;
 
 import static com.parking.smart.sp_parking_api.biz.parking.entity.QParkingLot.parkingLot;
-import static com.parking.smart.sp_parking_api.biz.parking.entity.QParkingLotDetail.parkingLotDetail;
 
 @Repository
 @RequiredArgsConstructor
@@ -22,27 +24,31 @@ public class CustomParkingLotRepositoryImpl implements CustomParkingLotRepositor
 
     private final JPAQueryFactory factory;
 
-    public Page<ParkingLotResponse> getAllParkingLots(Pageable pageable, String time, String howDay) {
+    public Page<ParkingLotResponse> getAllParkingLots(int page, int size, BooleanExpression condition, String kindOfDay) {
 
-        StringPath conditionOpenField;
-        StringPath conditionCloseField;
+        BooleanPath freeField;
+        StringPath openField;
+        StringPath closeField;
 
-        var now = Integer.parseInt(time);
+        var now = Integer.parseInt(CommonService.getTime());
 
-        switch (howDay) {
+        switch (kindOfDay) {
             case "weekend": {
-                conditionOpenField = parkingLotDetail.weekendOpen;
-                conditionCloseField = parkingLotDetail.weekendClose;
+                freeField = parkingLot.weekendFree;
+                openField = parkingLot.weekendOpen;
+                closeField = parkingLot.weekendClose;
                 break;
             }
             case "holiday": {
-                conditionOpenField = parkingLotDetail.holidayOpen;
-                conditionCloseField = parkingLotDetail.holidayClose;
+                freeField = parkingLot.holidayFree;
+                openField = parkingLot.holidayOpen;
+                closeField = parkingLot.holidayClose;
                 break;
             }
             default: {
-                conditionOpenField = parkingLotDetail.weekdayOpen;
-                conditionCloseField = parkingLotDetail.weekdayClose;
+                freeField = parkingLot.isFree;
+                openField = parkingLot.weekdayOpen;
+                closeField = parkingLot.weekdayClose;
             }
         }
 
@@ -52,18 +58,21 @@ public class CustomParkingLotRepositoryImpl implements CustomParkingLotRepositor
                                 parkingLot.id,
                                 parkingLot.name,
                                 parkingLot.address,
+                                freeField,
+                                openField,
+                                closeField,
                                 new CaseBuilder()
-                                        .when(conditionOpenField.castToNum(Integer.class).loe(now)
-                                                .and(conditionCloseField.castToNum(Integer.class).goe(now))
+                                        .when(openField.castToNum(Integer.class).loe(now)
+                                                .and(closeField.castToNum(Integer.class).goe(now))
                                         ).then(true)
                                         .otherwise(false).as("isOperating")
                         )
-                ).from(parkingLot).join(parkingLotDetail)
-                .on(parkingLotDetail.id.eq(parkingLotDetail.id))
-                .offset(pageable.getOffset())
-                .limit(pageable.getPageSize())
+                ).from(parkingLot)
+                .where(condition)
+                .offset(page)
+                .limit(size)
                 .fetch();
-        return new PageImpl<>(result, pageable, result.size());
+        return new PageImpl<>(result, Pageable.ofSize(size), result.size());
     }
 
 }

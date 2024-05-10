@@ -1,11 +1,13 @@
 package com.parking.smart.sp_parking_api.biz.parking.entity;
 
 import com.parking.smart.sp_parking_api.biz.common.entity.CommonEntity;
-import jakarta.persistence.*;
+import jakarta.persistence.Column;
+import jakarta.persistence.Entity;
+import jakarta.persistence.OneToOne;
+import jakarta.persistence.Table;
 import lombok.*;
 
-import java.time.LocalDateTime;
-import java.util.Objects;
+import java.math.BigDecimal;
 
 import static jakarta.persistence.CascadeType.ALL;
 import static jakarta.persistence.FetchType.LAZY;
@@ -28,26 +30,26 @@ public class ParkingLot extends CommonEntity {
     @Column(name = "ADDRESS")
     private String address;
 
-    @Column(name = "TEL")
-    private String tel;
+    @Column(name = "WEEKDAY_OPEN")
+    private String weekdayOpen;
 
-    @Column(name = "LAST_SYNC")
-    private LocalDateTime lastSync;
+    @Column(name = "WEEKDAY_CLOSE")
+    private String weekdayClose;
 
-    @Column(name = "REAL_TIME_INFO")
-    private Integer realTimeInfo;
+    @Column(name = "WEEKEND_OPEN")
+    private String weekendOpen;
 
-    @Column(name = "REAL_TIME_INFO_DESCRIPTION")
-    private String realTimeInfoDescription;
+    @Column(name = "WEEKEND_CLOSE")
+    private String weekendClose;
 
-    @Column(name = "NIGHT_OPEN")
-    private String nightOpen;
+    @Column(name = "HOLIDAY_OPEN")
+    private String holidayOpen;
+
+    @Column(name = "HOLIDAY_CLOSE")
+    private String holidayClose;
 
     @Column(name = "IS_FREE")
     private Boolean isFree;
-
-    @Column(name = "IS_NIGHT_FREE")
-    private Boolean isNightFree;
 
     @Column(name = "WEEKEND_FREE")
     private Boolean weekendFree;
@@ -55,39 +57,18 @@ public class ParkingLot extends CommonEntity {
     @Column(name = "HOLIDAY_FREE")
     private Boolean holidayFree;
 
+    @Column(name = "LATITUDE", precision = 20, scale = 8)
+    private BigDecimal latitude;
+
+    @Column(name = "LONGITUDE", precision = 20, scale = 8)
+    private BigDecimal longitude;
+
     @OneToOne(mappedBy = "parkingLot", fetch = LAZY, cascade = ALL)
     private ParkingLotPrice parkingLotPrice;
 
     @OneToOne(mappedBy = "parkingLot", fetch = LAZY, cascade = ALL)
     private ParkingLotDetail parkingLotDetail;
-    @Id
-    private Long id;
 
-    @Override
-    public boolean equals(Object o) {
-        if (this == o) return true;
-        if (o == null || getClass() != o.getClass()) return false;
-        ParkingLot that = (ParkingLot) o;
-        return Objects.equals(name, that.name) && Objects.equals(address, that.address)
-                && Objects.equals(tel, that.tel) && Objects.equals(lastSync, that.lastSync)
-                && Objects.equals(realTimeInfoDescription, that.realTimeInfoDescription)
-                && Objects.equals(realTimeInfo, that.realTimeInfo) && Objects.equals(nightOpen, that.nightOpen)
-                && Objects.equals(isFree, that.isFree) && Objects.equals(isNightFree, that.isNightFree)
-                && Objects.equals(weekendFree, that.weekendFree) && Objects.equals(holidayFree, that.holidayFree);
-    }
-
-    @Override
-    public int hashCode() {
-        return Objects.hash(name, address, tel, lastSync, realTimeInfo, realTimeInfoDescription, nightOpen, isFree, isNightFree, weekendFree, holidayFree);
-    }
-
-    public Long getId() {
-        return id;
-    }
-
-    public void setId(Long id) {
-        this.id = id;
-    }
 }
 
 
