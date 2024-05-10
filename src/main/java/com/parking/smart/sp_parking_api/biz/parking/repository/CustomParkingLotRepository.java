@@ -1,13 +1,13 @@
 package com.parking.smart.sp_parking_api.biz.parking.repository;
 
-import com.parking.smart.sp_parking_api.biz.parking.model.ParkingLotResponse;
+import com.parking.smart.sp_parking_api.biz.parking.model.response.ParkingLotResponse;
+import com.querydsl.core.types.dsl.BooleanExpression;
 import org.springframework.data.domain.Page;
-import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Repository;
 
 @Repository
 public interface CustomParkingLotRepository {
 
-    Page<ParkingLotResponse> getAllParkingLots(Pageable pageable, String time, String howDay);
+    Page<ParkingLotResponse> getAllParkingLots(int page, int size, BooleanExpression condition, String kindOfDay);
 
 }

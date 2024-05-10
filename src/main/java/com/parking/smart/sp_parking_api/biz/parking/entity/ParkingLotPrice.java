@@ -5,7 +5,6 @@ import jakarta.persistence.*;
 import lombok.*;
 
 import java.math.BigDecimal;
-import java.util.Objects;
 
 @Getter
 @Setter
@@ -41,19 +40,4 @@ public class ParkingLotPrice extends CommonEntity {
     @JoinColumn(name = "ID")
     private ParkingLot parkingLot;
 
-    @Override
-    public boolean equals(Object o) {
-        if (this == o) return true;
-        if (o == null || getClass() != o.getClass()) return false;
-        ParkingLotPrice that = (ParkingLotPrice) o;
-        return Objects.equals(code, that.code) && Objects.equals(unitMinute, that.unitMinute)
-                && unitPrice.compareTo(that.unitPrice) == 0 && Objects.equals(extraMinute, that.extraMinute)
-                && extraPrice.compareTo(that.extraPrice) == 0 && dailyMaxPrice.compareTo(that.dailyMaxPrice) == 0
-                && monthlyPassPrice.compareTo(that.monthlyPassPrice) == 0;
-    }
-
-    @Override
-    public int hashCode() {
-        return Objects.hash(code, unitMinute, unitPrice, extraMinute, extraPrice, dailyMaxPrice, monthlyPassPrice);
-    }
 }

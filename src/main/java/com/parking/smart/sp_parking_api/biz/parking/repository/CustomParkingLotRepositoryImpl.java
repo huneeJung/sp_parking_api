@@ -1,7 +1,10 @@
 package com.parking.smart.sp_parking_api.biz.parking.repository;
 
-import com.parking.smart.sp_parking_api.biz.parking.model.ParkingLotResponse;
+import com.parking.smart.sp_parking_api.biz.common.service.CommonService;
+import com.parking.smart.sp_parking_api.biz.parking.model.response.ParkingLotResponse;
 import com.querydsl.core.types.Projections;
+import com.querydsl.core.types.dsl.BooleanExpression;
+import com.querydsl.core.types.dsl.BooleanPath;
 import com.querydsl.core.types.dsl.CaseBuilder;
 import com.querydsl.core.types.dsl.StringPath;
 import com.querydsl.jpa.impl.JPAQueryFactory;
@@ -21,27 +24,31 @@ public class CustomParkingLotRepositoryImpl implements CustomParkingLotRepositor
 
     private final JPAQueryFactory factory;
 
-    public Page<ParkingLotResponse> getAllParkingLots(Pageable pageable, String time, String howDay) {
+    public Page<ParkingLotResponse> getAllParkingLots(int page, int size, BooleanExpression condition, String kindOfDay) {
 
-        StringPath conditionOpenField;
-        StringPath conditionCloseField;
+        BooleanPath freeField;
+        StringPath openField;
+        StringPath closeField;
 
-        var now = Integer.parseInt(time);
+        var now = Integer.parseInt(CommonService.getTime());
 
-        switch (howDay) {
+        switch (kindOfDay) {
             case "weekend": {
-                conditionOpenField = parkingLot.weekendOpen;
-                conditionCloseField = parkingLot.weekendClose;
+                freeField = parkingLot.weekendFree;
+                openField = parkingLot.weekendOpen;
+                closeField = parkingLot.weekendClose;
                 break;
             }
             case "holiday": {
-                conditionOpenField = parkingLot.holidayOpen;
-                conditionCloseField = parkingLot.holidayClose;
+                freeField = parkingLot.holidayFree;
+                openField = parkingLot.holidayOpen;
+                closeField = parkingLot.holidayClose;
                 break;
             }
             default: {
-                conditionOpenField = parkingLot.weekdayOpen;
-                conditionCloseField = parkingLot.weekdayClose;
+                freeField = parkingLot.isFree;
+                openField = parkingLot.weekdayOpen;
+                closeField = parkingLot.weekdayClose;
             }
         }
 
@@ -51,17 +58,21 @@ public class CustomParkingLotRepositoryImpl implements CustomParkingLotRepositor
                                 parkingLot.id,
                                 parkingLot.name,
                                 parkingLot.address,
+                                freeField,
+                                openField,
+                                closeField,
                                 new CaseBuilder()
-                                        .when(conditionOpenField.castToNum(Integer.class).loe(now)
-                                                .and(conditionCloseField.castToNum(Integer.class).goe(now))
+                                        .when(openField.castToNum(Integer.class).loe(now)
+                                                .and(closeField.castToNum(Integer.class).goe(now))
                                         ).then(true)
                                         .otherwise(false).as("isOperating")
                         )
                 ).from(parkingLot)
-                .offset(pageable.getOffset())
-                .limit(pageable.getPageSize())
+                .where(condition)
+                .offset(page)
+                .limit(size)
                 .fetch();
-        return new PageImpl<>(result, pageable, result.size());
+        return new PageImpl<>(result, Pageable.ofSize(size), result.size());
     }
 
 }

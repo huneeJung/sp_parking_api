@@ -6,7 +6,6 @@ import lombok.*;
 
 import java.math.BigDecimal;
 import java.time.LocalDateTime;
-import java.util.Objects;
 
 @Getter
 @Setter
@@ -60,24 +59,4 @@ public class ParkingLotDetail extends CommonEntity {
     @JoinColumn(name = "ID")
     private ParkingLot parkingLot;
 
-    @Override
-    public boolean equals(Object o) {
-        if (this == o) return true;
-        if (o == null || getClass() != o.getClass()) return false;
-        ParkingLotDetail that = (ParkingLotDetail) o;
-        // 위도 경도는 같은 기존 데이터와 같은지 체크할때 필드 목록에서 제외
-        // 같은 주차장인 중복 데이터가 존재하고 각각의 위도 경도 수치가 달라 매번 업데이트 수행하는 불필요한 오버헤드 발생
-        return Objects.equals(code, that.code) && Objects.equals(typeCode, that.typeCode)
-                && Objects.equals(typeName, that.typeName) && Objects.equals(operationCode, that.operationCode)
-                && Objects.equals(operationName, that.operationName) && Objects.equals(tel, that.tel)
-                && Objects.equals(lastSync, that.lastSync) && Objects.equals(realTimeInfo, that.realTimeInfo)
-                && Objects.equals(realTimeInfoDescription, that.realTimeInfoDescription)
-                && Objects.equals(nightOpen, that.nightOpen) && Objects.equals(isNightFree, that.isNightFree);
-    }
-
-    @Override
-    public int hashCode() {
-        return Objects.hash(code, typeCode, typeName, operationCode, operationName,
-                tel, lastSync, realTimeInfo, realTimeInfoDescription, nightOpen, isNightFree);
-    }
 }

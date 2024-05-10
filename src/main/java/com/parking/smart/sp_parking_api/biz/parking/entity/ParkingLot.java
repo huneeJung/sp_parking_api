@@ -7,7 +7,7 @@ import jakarta.persistence.OneToOne;
 import jakarta.persistence.Table;
 import lombok.*;
 
-import java.util.Objects;
+import java.math.BigDecimal;
 
 import static jakarta.persistence.CascadeType.ALL;
 import static jakarta.persistence.FetchType.LAZY;
@@ -57,30 +57,18 @@ public class ParkingLot extends CommonEntity {
     @Column(name = "HOLIDAY_FREE")
     private Boolean holidayFree;
 
+    @Column(name = "LATITUDE", precision = 20, scale = 8)
+    private BigDecimal latitude;
+
+    @Column(name = "LONGITUDE", precision = 20, scale = 8)
+    private BigDecimal longitude;
+
     @OneToOne(mappedBy = "parkingLot", fetch = LAZY, cascade = ALL)
     private ParkingLotPrice parkingLotPrice;
 
     @OneToOne(mappedBy = "parkingLot", fetch = LAZY, cascade = ALL)
     private ParkingLotDetail parkingLotDetail;
 
-    @Override
-    public boolean equals(Object o) {
-        if (this == o) return true;
-        if (o == null || getClass() != o.getClass()) return false;
-        ParkingLot that = (ParkingLot) o;
-        return Objects.equals(code, that.code) && Objects.equals(name, that.name)
-                && Objects.equals(address, that.address) && Objects.equals(weekdayOpen, that.weekdayOpen)
-                && Objects.equals(weekdayClose, that.weekdayClose) && Objects.equals(weekendOpen, that.weekendOpen)
-                && Objects.equals(weekendClose, that.weekendClose) && Objects.equals(holidayOpen, that.holidayOpen)
-                && Objects.equals(holidayClose, that.holidayClose) && Objects.equals(isFree, that.isFree)
-                && Objects.equals(weekendFree, that.weekendFree) && Objects.equals(holidayFree, that.holidayFree);
-    }
-
-    @Override
-    public int hashCode() {
-        return Objects.hash(code, name, address, weekdayOpen, weekdayClose, weekendOpen,
-                weekendClose, holidayOpen, holidayClose, isFree, weekendFree, holidayFree);
-    }
 }
 
 
