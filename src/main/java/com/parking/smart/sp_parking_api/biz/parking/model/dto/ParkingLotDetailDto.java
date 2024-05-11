@@ -5,7 +5,6 @@ import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
 
-import java.math.BigDecimal;
 import java.time.LocalDateTime;
 
 @Getter
@@ -25,7 +24,5 @@ public class ParkingLotDetailDto {
     private String realTimeInfoDescription;
     private String nightOpen;
     private Boolean isNightFree;
-    private BigDecimal latitude;
-    private BigDecimal longitude;
 
 }
