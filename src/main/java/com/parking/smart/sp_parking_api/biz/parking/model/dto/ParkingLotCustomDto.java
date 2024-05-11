@@ -1,4 +1,4 @@
-package com.parking.smart.sp_parking_api.biz.parking.model.response;
+package com.parking.smart.sp_parking_api.biz.parking.model.dto;
 
 import lombok.AllArgsConstructor;
 import lombok.Builder;
@@ -9,7 +9,7 @@ import lombok.Setter;
 @Setter
 @Builder
 @AllArgsConstructor
-public class ParkingLotResponse {
+public class ParkingLotCustomDto {
 
     private Long id;
     private String name;
@@ -20,7 +20,7 @@ public class ParkingLotResponse {
     private Double distance;
     private Boolean isOperating;
 
-    public ParkingLotResponse(Long id, String name, String address, Boolean isFree, String openTime, String closeTime, Boolean isOperating) {
+    public ParkingLotCustomDto(Long id, String name, String address, Boolean isFree, String openTime, String closeTime, Boolean isOperating) {
         this.id = id;
         this.name = name;
         this.address = address;

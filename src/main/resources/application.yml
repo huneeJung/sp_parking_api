@@ -51,13 +51,11 @@ logging:
   pattern:
     console: "[%-5level] %d{yyyy-MM-dd HH:mm:ss.SSS} [%t] %c{1} - %msg%n"
 
+## 서울시 시영 주차장 실시간 상태 정보 OpenAPI
 parking:
   openapi:
-    realtime:
+    status:
       url: http://openapi.seoul.go.kr:8088
       key: ENC(9nnh9Hl/CDacvhOcndqPMYgRXVoJ73zsGWdwEP89BWkBGw32L052NQ==)
       type: json
       service: GetParkingInfo
-  insert:
-    batch:
-      flag: 100

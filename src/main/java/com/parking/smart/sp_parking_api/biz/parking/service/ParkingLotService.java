@@ -6,9 +6,9 @@ import com.parking.smart.sp_parking_api.biz.common.mapper.parking.ParkingLotMapp
 import com.parking.smart.sp_parking_api.biz.common.mapper.parking.ParkingLotPriceMapper;
 import com.parking.smart.sp_parking_api.biz.common.service.CommonService;
 import com.parking.smart.sp_parking_api.biz.parking.entity.QParkingLot;
+import com.parking.smart.sp_parking_api.biz.parking.model.dto.ParkingLotCustomDto;
 import com.parking.smart.sp_parking_api.biz.parking.model.dto.ParkingLotDto;
 import com.parking.smart.sp_parking_api.biz.parking.model.request.SearchParkingLotFilter;
-import com.parking.smart.sp_parking_api.biz.parking.model.response.ParkingLotResponse;
 import com.parking.smart.sp_parking_api.biz.parking.repository.ParkingLotRepository;
 import com.querydsl.core.types.dsl.BooleanExpression;
 import com.querydsl.core.types.dsl.Expressions;
@@ -31,7 +31,7 @@ public class ParkingLotService {
 
     private final ParkingLotRepository parkingLotRepository;
 
-    public Page<ParkingLotResponse> getParkingLotList(SearchParkingLotFilter filter) {
+    public Page<ParkingLotCustomDto> getParkingLotList(SearchParkingLotFilter filter) {
         var condition = getCondition(filter);
         var kindOfDay = commonService.kindOfDay();
         return parkingLotRepository.getAllParkingLots(
@@ -39,7 +39,7 @@ public class ParkingLotService {
         );
     }
 
-    public ParkingLotDto getParkingLotDetails(Long id) {
+    public ParkingLotDto getParkingLotDetail(Long id) {
 
         var optional = parkingLotRepository.findById(id);
         if (optional.isEmpty()) {
