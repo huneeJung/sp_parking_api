@@ -77,6 +77,7 @@ public class ParkingLotService {
         }
         // TODO : 추가 작업 생각해보기 - 가까운 순으로 정렬은 QueryDSL 에서 처리중
         if (StringUtils.isNotBlank(lat) && StringUtils.isNotBlank(lng)) {
+//            11 킬로내에 존재하는 주차장 굳이 필요 없어 보이지만 일단 주석
 //            var latitudeStart = new BigDecimal(lat).subtract(new BigDecimal("0.1"));
 //            var latitudeEnd = new BigDecimal(lat).add(new BigDecimal("0.1"));
 //            var longitudeStart = new BigDecimal(lng).subtract(new BigDecimal("0.1"));
@@ -111,7 +112,7 @@ public class ParkingLotService {
                 }
             }
         }
-        
+
         return condition;
     }
 
