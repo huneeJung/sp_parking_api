@@ -30,7 +30,8 @@ public class HolidayService {
         find = false;
     }
 
-    public Optional<HolidayDto> getHoliday(String date) {
+    // TODO : 이것이 과연 안전한 코드일까..? 다른 캐싱전략을 사용하는 것이 더 안전할 것 같기도 하고..?
+    public boolean getHoliday(String date) {
         if (!find) {
             find = true;
             var optional = holidayRepository.findByDate(date);
@@ -40,7 +41,7 @@ public class HolidayService {
             }
             result = Optional.ofNullable(holidayDto);
         }
-        return result;
+        return result.isPresent();
     }
 
     @Scheduled(cron = "0 0 0 * * ?")

@@ -34,8 +34,7 @@ public class CommonService {
     }
 
     public boolean isHoliday() {
-        var optional = holidayService.getHoliday(getTime());
-        return optional.isPresent();
+        return holidayService.getHoliday(getTime());
     }
 
     public String kindOfDay() {
