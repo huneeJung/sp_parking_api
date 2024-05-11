@@ -1,7 +1,7 @@
 package com.parking.smart.sp_parking_api.biz.parking.repository;
 
 import com.parking.smart.sp_parking_api.biz.common.service.CommonService;
-import com.parking.smart.sp_parking_api.biz.parking.model.response.ParkingLotResponse;
+import com.parking.smart.sp_parking_api.biz.parking.model.dto.ParkingLotCustomDto;
 import com.querydsl.core.types.Expression;
 import com.querydsl.core.types.Projections;
 import com.querydsl.core.types.dsl.*;
@@ -24,7 +24,7 @@ public class CustomParkingLotRepositoryImpl implements CustomParkingLotRepositor
 
     private final JPAQueryFactory factory;
 
-    public Page<ParkingLotResponse> getAllParkingLots(BooleanExpression condition, int page, int size, String lat, String lng, String kindOfDay) {
+    public Page<ParkingLotCustomDto> getAllParkingLots(BooleanExpression condition, int page, int size, String lat, String lng, String kindOfDay) {
 
         BooleanPath freeField;
         StringPath openField;
@@ -86,9 +86,9 @@ public class CustomParkingLotRepositoryImpl implements CustomParkingLotRepositor
         selectColumns.add(isOperating.as("isOperating"));
 
         // 쿼리 시작
-        JPAQuery<ParkingLotResponse> query = factory.select(
+        JPAQuery<ParkingLotCustomDto> query = factory.select(
                         Projections.constructor(
-                                ParkingLotResponse.class,
+                                ParkingLotCustomDto.class,
                                 selectColumns.toArray(new Expression[0])
                         )
                 ).from(parkingLot)

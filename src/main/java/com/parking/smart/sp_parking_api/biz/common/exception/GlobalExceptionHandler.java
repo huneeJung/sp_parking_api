@@ -11,8 +11,10 @@ import static com.parking.smart.sp_parking_api.biz.common.constant.Constant.Http
 @ControllerAdvice
 public class GlobalExceptionHandler {
 
+    // TODO : Exception 캐치가 안됨
     @ExceptionHandler(RuntimeException.class)
     public CommonResponse<?> handleException(RuntimeException e) {
+        log.error("", e);
         if (e instanceof AlertException) {
             return CommonResponse.builder()
                     .success(false)
@@ -21,7 +23,6 @@ public class GlobalExceptionHandler {
                     .result(e.getMessage())
                     .build();
         } else {
-            log.error("", e);
             return CommonResponse.builder()
                     .success(false)
                     .code(SERVER_FAIL_CODE)

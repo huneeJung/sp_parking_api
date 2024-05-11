@@ -5,6 +5,7 @@ public class AlertException extends RuntimeException {
     private final String message;
 
     public AlertException(String message) {
+        super(message);
         this.message = message;
     }
 }

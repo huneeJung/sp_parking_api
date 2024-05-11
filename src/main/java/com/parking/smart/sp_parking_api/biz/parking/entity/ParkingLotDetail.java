@@ -18,6 +18,9 @@ public class ParkingLotDetail extends CommonEntity {
     @Column(name = "CODE", unique = true)
     private String code;
 
+    @Column(name = "CAPACITY")
+    private Integer capacity;
+
     @Column(name = "TYPE_CODE")
     private String typeCode;
 

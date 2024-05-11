@@ -6,9 +6,9 @@ import com.parking.smart.sp_parking_api.biz.common.mapper.parking.ParkingLotMapp
 import com.parking.smart.sp_parking_api.biz.common.mapper.parking.ParkingLotPriceMapper;
 import com.parking.smart.sp_parking_api.biz.common.service.CommonService;
 import com.parking.smart.sp_parking_api.biz.parking.entity.QParkingLot;
+import com.parking.smart.sp_parking_api.biz.parking.model.dto.ParkingLotCustomDto;
 import com.parking.smart.sp_parking_api.biz.parking.model.dto.ParkingLotDto;
 import com.parking.smart.sp_parking_api.biz.parking.model.request.SearchParkingLotFilter;
-import com.parking.smart.sp_parking_api.biz.parking.model.response.ParkingLotResponse;
 import com.parking.smart.sp_parking_api.biz.parking.repository.ParkingLotRepository;
 import com.querydsl.core.types.dsl.BooleanExpression;
 import com.querydsl.core.types.dsl.Expressions;
@@ -31,7 +31,7 @@ public class ParkingLotService {
 
     private final ParkingLotRepository parkingLotRepository;
 
-    public Page<ParkingLotResponse> getParkingLotList(SearchParkingLotFilter filter) {
+    public Page<ParkingLotCustomDto> getParkingLotList(SearchParkingLotFilter filter) {
         var condition = getCondition(filter);
         var kindOfDay = commonService.kindOfDay();
         return parkingLotRepository.getAllParkingLots(
@@ -39,7 +39,7 @@ public class ParkingLotService {
         );
     }
 
-    public ParkingLotDto getParkingLotDetails(Long id) {
+    public ParkingLotDto getParkingLotDetail(Long id) {
 
         var optional = parkingLotRepository.findById(id);
         if (optional.isEmpty()) {
@@ -77,6 +77,7 @@ public class ParkingLotService {
         }
         // TODO : 추가 작업 생각해보기 - 가까운 순으로 정렬은 QueryDSL 에서 처리중
         if (StringUtils.isNotBlank(lat) && StringUtils.isNotBlank(lng)) {
+//            11 킬로내에 존재하는 주차장 굳이 필요 없어 보이지만 일단 주석
 //            var latitudeStart = new BigDecimal(lat).subtract(new BigDecimal("0.1"));
 //            var latitudeEnd = new BigDecimal(lat).add(new BigDecimal("0.1"));
 //            var longitudeStart = new BigDecimal(lng).subtract(new BigDecimal("0.1"));
@@ -111,7 +112,7 @@ public class ParkingLotService {
                 }
             }
         }
-        
+
         return condition;
     }
 
