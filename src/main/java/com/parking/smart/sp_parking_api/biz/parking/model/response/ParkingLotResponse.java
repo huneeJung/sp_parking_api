@@ -11,13 +11,23 @@ import lombok.Setter;
 @AllArgsConstructor
 public class ParkingLotResponse {
 
-    private String id;
+    private Long id;
     private String name;
     private String address;
-    private boolean isFree;
-    private boolean openTime;
-    private boolean closeTime;
+    private Boolean isFree;
+    private String openTime;
+    private String closeTime;
+    private Double distance;
+    private Boolean isOperating;
 
-    private boolean isOperating;
+    public ParkingLotResponse(Long id, String name, String address, Boolean isFree, String openTime, String closeTime, Boolean isOperating) {
+        this.id = id;
+        this.name = name;
+        this.address = address;
+        this.isFree = isFree;
+        this.openTime = openTime;
+        this.closeTime = closeTime;
+        this.isOperating = isOperating;
+    }
 
 }

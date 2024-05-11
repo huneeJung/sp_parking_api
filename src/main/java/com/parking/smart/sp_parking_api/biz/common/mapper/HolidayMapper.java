@@ -5,7 +5,7 @@ import com.parking.smart.sp_parking_api.biz.holiday.model.HolidayDto;
 import org.mapstruct.Mapper;
 import org.mapstruct.factory.Mappers;
 
-@Mapper
+@Mapper(componentModel = "spring")
 public interface HolidayMapper {
 
     HolidayMapper INSTANCE = Mappers.getMapper(HolidayMapper.class);
