@@ -111,6 +111,7 @@ public class ParkingLotService {
                 }
             }
         }
+        
         return condition;
     }
 
