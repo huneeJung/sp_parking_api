@@ -2,16 +2,15 @@ package com.parking.smart.sp_parking_api.biz.common.exception;
 
 import com.parking.smart.sp_parking_api.biz.common.model.CommonResponse;
 import lombok.extern.slf4j.Slf4j;
-import org.springframework.web.bind.annotation.ControllerAdvice;
 import org.springframework.web.bind.annotation.ExceptionHandler;
+import org.springframework.web.bind.annotation.RestControllerAdvice;
 
 import static com.parking.smart.sp_parking_api.biz.common.constant.Constant.HttpConstant.*;
 
 @Slf4j
-@ControllerAdvice
+@RestControllerAdvice
 public class GlobalExceptionHandler {
-
-    // TODO : Exception 캐치가 안됨
+    
     @ExceptionHandler(RuntimeException.class)
     public CommonResponse<?> handleException(RuntimeException e) {
         log.error("", e);
