@@ -37,7 +37,7 @@ public class ParkingLotStatusService {
     @Value("${parking.openapi.status.service}")
     private String service;
 
-    // TODO : 실시간 요청마다 매번 외부 API 요청은 리소스가 낭비됨, 개선 사항 고민
+    // TODO : 실시간 요청마다 매번 외부 API 요청은 리소스가 낭비됨, 개선 사항 고민 / 실시간이라 갱신이라 캐싱 전략은 무의미
     public ParkingLotStatusDto getParkingLotStatus(Long id, String address) {
         // 실시간 정보 제공중인 데이터인지 확인
         var optional = parkingLotRepository.findById(id);
